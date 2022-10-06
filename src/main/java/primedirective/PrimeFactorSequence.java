@@ -27,7 +27,25 @@ public class PrimeFactorSequence {
      */
     public List<Integer> primeFactorSequence() {
         List<Integer> seq = new ArrayList<>();
-        // TODO: Implement this method
+        seq.add(0);
+        seq.add(0);
+
+        for(int i = 2; i <= upperBound; i++){
+            int current = i;
+            int count = 0;
+            int j = 0;
+            while(j < primes.size()){
+                int currentPrime = primes.get(j);
+                if(current % currentPrime == 0){
+                    count++;
+                    current = current / currentPrime;
+                    j = 0;
+                } else {
+                    j++;
+                }
+            }
+            seq.add(count);
+        }
         return seq;
     }
 
@@ -41,7 +59,14 @@ public class PrimeFactorSequence {
      */
     public List<Integer> numbersWithMPrimeFactors(int m) {
         List<Integer> seq = new ArrayList<>();
-        // TODO: Implement this method
+        PrimeFactorSequence pfs = new PrimeFactorSequence(upperBound);
+        int length = pfs.primeFactorSequence().size();
+
+        for(int i = 0; i < length; i++){
+            if(pfs.primeFactorSequence().get(i) == m) {
+                seq.add(i);
+            }
+        }
         return seq;
     }
 
@@ -59,7 +84,17 @@ public class PrimeFactorSequence {
      */
     public List<IntPair> numbersWithMPrimeFactorsAndSmallGap(int m, int gap) {
         List<IntPair> listOfPairs = new ArrayList<>();
-        // TODO: Implement this method
+        PrimeFactorSequence pfs = new PrimeFactorSequence(upperBound);
+        List<Integer> mpfs = pfs.numbersWithMPrimeFactors(m);
+
+        for(int i = 0; i < mpfs.size() - 1; i++){
+            if(mpfs.get(i+1) - mpfs.get(i) <= gap){
+                int a = mpfs.get(i);
+                int b = mpfs.get(i+1);
+                IntPair pair = new IntPair(a, b);
+                listOfPairs.add(pair);
+            }
+        }
         return listOfPairs;
     }
 
